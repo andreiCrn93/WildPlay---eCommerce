@@ -181,7 +181,7 @@ item.addEventListener("click",()=>{
     currentProductInfoImg2.src = chosenProduct.info[1].img;
     currentProductInfoText1.textContent = chosenProduct.info[0].text;
     currentProductInfoText2.textContent = chosenProduct.info[1].text;
-
+    let selectedColorIndex = 0;
     //asignare culoare
     currentProductColors.forEach((color,index)=>{
         color.style.backgroundColor = chosenProduct.colors[index].code;
@@ -192,26 +192,16 @@ item.addEventListener("click",()=>{
 // Adăugarea unui eveniment de click pentru fiecare element din lista de culori
 currentProductColors.forEach((color,index)=>{
     color.addEventListener("click",()=>{
+        currentProductColors.forEach((color) => {
+            color.classList.remove("active");
+        });
+        color.classList.add("active");
         // Actualizarea imaginii produsului curent cu imaginea corespunzătoare culorii selectate
         currentProductImg.src = chosenProduct.colors[index].img;
         // Actualizarea numelui culorii produsului curent cu numele culorii selectate
         currentProductColorName.textContent = chosenProduct.colors[index].name;
 });
 });
-
-// Selectarea elementelor HTML relevante pentru afișarea/ascunderea secțiunii de plată
-const productButton = document.querySelector(".productButton");
-const payment = document.querySelector(".payment");
-const close = document.querySelector(".close");
-
-// Adăugarea unui eveniment de click pentru butonul de produs pentru a deschide secțiunea de plată
-productButton.addEventListener("click",()=>{
-    payment.style.display="flex" /*Afișarea secțiunii de plată prin setarea stilului "display:flex"*/
-})
-// Adăugarea unui eveniment de click pentru butonul de închidere pentru a ascunde secțiunea de plată
-close.addEventListener("click",()=>{
-    payment.style.display="none" /*Ascunderea secțiunii de plată prin setarea stilului "display:none"*/
-})
 
 const infoButton = document.querySelector(".productInfoBox");
 const infos = document.querySelector(".infos");
@@ -224,3 +214,504 @@ infoButton.addEventListener("click",()=>{
 closeInfo.addEventListener("click",()=>{
     infos.style.display="none"
 })
+
+    const emailModal = document.querySelector('.emailMd');
+    const joinButton = document.querySelector('.fButton');
+    const belowModalIcons = document.querySelector('.fIcons');
+    const belowModalTitle = document.querySelector('#followUs');
+    const emailForm = document.getElementById('emailForm');
+    const emailInput = document.getElementById('email');
+    const modalMessage = document.querySelector('.emailMdContent');
+
+    function openEmailModal() {
+        setTimeout(function() {
+            emailModal.style.display = 'block';
+        }, 500);
+      }
+    
+    function closeEmailModal(){
+        emailModal.style.display = 'none';
+    }
+    
+    let isSubscribed = false;
+
+    joinButton.addEventListener('click', function() {
+        const email = emailInput.value.trim();
+        if(isValidEmail(email)){
+            modalMessage.textContent = 'Thanks for subscribing!';
+            modalMessage.style.color = 'black';
+            modalMessage.style.backgroundColor = 'rgb(92, 244, 153)';
+            isSubscribed = true;
+            openEmailModal();
+            setTimeout(closeEmailModal,3000);
+        } else {
+            modalMessage.textContent = 'Invalid email adress!';
+            modalMessage.style.color = 'rgb(145, 39, 13)';
+            modalMessage.style.backgroundColor = 'white';
+            openEmailModal();
+            setTimeout(closeEmailModal,3000);
+        };
+        emailInput.value = '';
+      });
+
+  joinButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    belowModalIcons.classList.add('transition-delay');
+    belowModalTitle.classList.add('transition-delay');
+
+    setTimeout(function() {
+        belowModalIcons.classList.remove('transition-delay');
+        belowModalTitle.classList.remove('transition-delay');
+    },3000);
+    // openModal();
+  });
+
+  function isValidEmail(email){
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+
+  
+  const addToCartButton = document.querySelector(".productButton");
+
+  addToCartButton.addEventListener('click',addToCart);
+
+    let productColorIndex = 0;
+    menuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        productColorIndex = 0;
+        currentProductColors.forEach((color) => {
+            color.classList.remove("active");
+        });
+});
+});
+let isCartOpen = false;
+const closeCartButton = document.querySelector(".closeCart");
+const cartMenu = document.querySelector(".cartMenu");
+const openCartButton = document.querySelector(".cartButton");
+
+function openCart(){
+    cartMenu.style.display="block";
+    isCartOpen = true;
+}
+
+function closeCart(){
+    cartMenu.style.display="none";
+    isCartOpen = false;
+}
+
+closeCartButton.addEventListener('click',closeCart);
+openCartButton.addEventListener('click',openCart);
+
+const ulElement = document.querySelector("ul");
+const emptyMessage = document.querySelector(".emptyMessage");
+
+  function addToCart(){
+    const productName = currentProductTitle.textContent;
+    const productPrice = currentProductPrice.textContent;
+    productColorIndex = Array.from(currentProductColors).findIndex(color => color.classList.contains("active"));
+    if (productColorIndex === -1) {
+        productColorIndex = 0;
+    }
+    const productImage = chosenProduct.colors[productColorIndex].img;
+    const productColorName = chosenProduct.colors[productColorIndex].name;
+    const productImageColor = chosenProduct.colors[productColorIndex].code;
+    const existingCartItem = document.querySelector(`.itemDesc .itemName[data-name="${productName}${productColorName}"]`);
+
+    if(existingCartItem){
+        const quantityElement = existingCartItem.parentElement.nextElementSibling.querySelector(".currentQty");
+        const quantity = parseInt(quantityElement.textContent);
+        quantityElement.textContent = quantity + 1;
+        const amountElement = existingCartItem.parentElement.nextElementSibling.nextElementSibling;
+        const amountElementInt = parseInt(amountElement.textContent.substring(1,amountElement.textContent.length));
+        const amountElement3 = productPrice.substring(1,productPrice.length);
+        const newAmountElement = parseInt(amountElementInt) + parseInt(amountElement3);
+        updateTotalPrice();
+        amountElement.innerHTML = "$" + newAmountElement;
+        const numberOfElements = document.querySelector('.itemsNumber');
+        numberOfElements.innerHTML = parseInt(numberOfElements.textContent)+1;
+
+    } else{
+            const newItem = document.createElement("li");
+            newItem.classList.add("item");
+            newItem.setAttribute("data-name", productName);
+            newItem.setAttribute("data-color", productColorName);
+            newItem.innerHTML = `
+                <div class="itemImage">
+                    <img src="${productImage}" alt="" class="itemImg">
+                </div>
+                <div class="itemDesc" style="background-color:${productImageColor}">
+                    <div class="itemName" data-name="${productName}${productColorName}">${productName}</div>
+                    <div class="itemColor" data-name="${productColorName}">${productColorName}</div>
+                </div>
+                <div class="qtyMenu">
+                    <button class="minus">-</button>
+                    <div class="currentQty">1</div>
+                    <button class="plus">+</button>
+                </div>
+                <div class="amount">${productPrice}</div>
+                <div class="bin">
+                    <button class="binButton">
+                        <img src="./Images/bin_icon.png" alt="" class="binIcon">
+                    </button>
+                </div>
+            `;
+            document.querySelector(".list").appendChild(newItem);
+                newItem.querySelector(".minus").addEventListener("click", decreaseQuantity);
+                newItem.querySelector(".plus").addEventListener("click", increaseQuantity);
+                newItem.querySelector(".binButton").addEventListener("click", removeItem);
+                updateTotalPrice()
+                const numberOfElements = document.querySelector('.itemsNumber');
+                numberOfElements.innerHTML = parseInt(number2 = numberOfElements.textContent)+1;
+    }
+}
+
+function increaseQuantity(event) {
+    const quantityElement = event.target.parentElement.querySelector(".currentQty");
+    const quantity = parseInt(quantityElement.textContent);
+    quantityElement.textContent = quantity + 1;
+    const productPrice = currentProductPrice.textContent;
+    const amountElement = event.target.parentElement.nextElementSibling;
+    const amountElementInt = parseInt(amountElement.textContent.substring(1,amountElement.textContent.length));
+    const amountElement3 = productPrice.substring(1,productPrice.length);
+    const newAmountElement = parseInt(amountElementInt) + parseInt(amountElement3);
+    amountElement.innerHTML = "$" + newAmountElement;
+    const numberOfElements = document.querySelector('.itemsNumber');
+    numberOfElements.innerHTML = parseInt(numberOfElements.textContent)+1;
+    updateTotalPrice();
+}
+
+function decreaseQuantity(event) {
+    const quantityElement = event.target.parentElement.querySelector(".currentQty");
+    let quantity = parseInt(quantityElement.textContent);
+    if (quantity > 1) {
+        quantityElement.textContent = quantity - 1;
+    } else {
+        event.target.closest(".item").remove();
+    }
+    const productPrice = currentProductPrice.textContent;
+    const amountElement = event.target.parentElement.nextElementSibling;
+    const amountElementInt = parseInt(amountElement.textContent.substring(1,amountElement.textContent.length));
+    const amountElement3 = productPrice.substring(1,productPrice.length);
+    const newAmountElement = parseInt(amountElementInt) - parseInt(amountElement3);
+    amountElement.innerHTML = "$" + newAmountElement;
+    const numberOfElements = document.querySelector('.itemsNumber');
+    numberOfElements.innerHTML = parseInt(numberOfElements.textContent)-1;
+    updateTotalPrice();
+}
+
+function removeItem(event) {
+    event.target.closest(".item").remove();
+    const numberElementsRemoved = parseInt(event.target.closest(".item").querySelector(".currentQty").textContent);
+    const numberOfElements = document.querySelector('.itemsNumber');
+    numberOfElements.innerHTML = parseInt(numberOfElements.textContent)-parseInt(numberElementsRemoved);
+    updateTotalPrice();
+}
+const total = document.querySelector('.totalAmount');
+
+function updateTotalPrice() {
+    let totalPrice = 0;
+    document.querySelectorAll(".item").forEach(item => {
+    const updatedPrice = parseInt(item.querySelector(".amount").textContent.substring(1,item.querySelector(".amount").textContent.length));
+    totalPrice += updatedPrice;
+    });
+    total.innerHTML=totalPrice+"$";
+}
+
+const checkoutButton = document.querySelector('.checkoutButton');
+const payment = document.querySelector(".payment");
+
+document.body.addEventListener('click', function() {
+    
+if (ulElement.childElementCount === 0) {
+    emptyMessage.style.display = 'flex';
+    checkoutButton.style.backgroundColor = 'gray';
+    checkoutButton.addEventListener('click', ()=>{
+        payment.style.display='none';
+        cartMenu.style.display="block";
+        isCartOpen = true;
+    })
+} else {
+    emptyMessage.style.display = 'none';
+    checkoutButton.style.backgroundColor = 'greenyellow';
+    checkoutButton.addEventListener('click', ()=>{
+        payment.style.display='flex';
+        cartMenu.style.display="none";
+        isCartOpen = false;
+    })
+};
+const numberOfElements = document.querySelector(".itemsNumber");
+if(parseInt(numberOfElements.textContent)===0){
+    numberOfElements.style.display="none";
+} else{
+    numberOfElements.style.display="block";
+};
+
+const discountedPrice = document.querySelector(".discountedAmount");
+if(isSubscribed===true && ulElement.childElementCount !== 0){
+    discountedPrice.innerHTML = parseInt(total.innerHTML.substring(0,total.length)) - 0.1*parseInt(total.innerHTML.substring(0,total.length)) + "$";
+    discountedPrice.style.display = "block";
+    total.style.textDecoration = "line-through";
+} else{
+    discountedPrice.style.display = "none";
+    total.style.textDecoration = "none";
+};
+
+
+limitedOfferButton.addEventListener("mouseenter", () => {
+    if(isCartOpen===false){
+        offerMessage.style.display = "flex";
+    } else{
+        offerMessage.style.display = "none";
+    }
+})
+limitedOfferButton.addEventListener("mouseleave", () => {
+    offerMessage.style.display = "none";
+})
+
+});
+
+const close = document.querySelector(".close");
+
+close.addEventListener("click",()=>{
+    payment.style.display="none";
+})
+
+const limitedOfferButton = document.querySelector(".limitedOffer");
+const offerMessage = document.querySelector(".offer");
+
+
+limitedOfferButton.addEventListener("mouseenter", () => {
+    offerMessage.style.display = "flex";
+})
+
+limitedOfferButton.addEventListener("mouseleave", () => {
+    offerMessage.style.display = "none";
+})
+
+const nameRegex = /[a-zA-Z]+(?:['-][a-zA-Z]+)?(?: [a-zA-Z]+(?:['-][a-zA-Z]+)?)+$/;
+let isNameFilled = false;
+let isNameFilledCorrectly = false;
+function isValidName(name){
+    return nameRegex.test(name);
+}
+
+function checkName(){
+    const personName = document.getElementById('personName').value;
+    if(personName===''){
+        isNameFilled = false;
+        isNameFilledCorrectly = false;
+    } else if(isValidName(personName)){
+        isNameFilled = true;
+        isNameFilledCorrectly = true;
+    } else {
+        isNameFilled = true;
+        isNameFilledCorrectly = false;
+    }
+}
+
+
+const phoneRegex = /^\+407\d{8}$/;
+let isPhoneFilled = false;
+let isPhoneFilledCorrectly = false;
+
+function isValidPhone(phone){
+    return phoneRegex.test(phone);
+}
+
+function checkPhone(){
+    const personPhone = document.getElementById('personPhone').value;
+    if(personPhone===""){
+        isPhoneFilled = false;
+        isPhoneFilledCorrectly = false;
+    } else if(isValidPhone(personPhone)) {
+        isPhoneFilled = true;
+        isPhoneFilledCorrectly = true;
+    } else {
+        isPhoneFilled = true;
+        isPhoneFilledCorrectly = false;
+    }
+}
+
+let isAddressFilled = false;
+
+function checkAddress(){
+    const personAddress = document.getElementById('personAddress').value;
+    if(personAddress===""){
+        isAddressFilled = false;
+    } else{
+        isAddressFilled = true;
+    }
+}
+
+const cardRegex = /^\d{16}$/;
+let isCardNumberFilled = false;
+let isCardNumberFilledCorrectly = false;
+
+function isValidCardNumber(cardNumber){
+    return cardRegex.test(cardNumber);
+}
+
+function checkCardNumber(){
+    const cardNumber = document.getElementById('cardNumber').value;
+    if(cardNumber===''){
+        isCardNumberFilled = false;
+        isCardNumberFilledCorrectly = false;
+    } else if(isValidCardNumber(cardNumber)){
+        isCardNumberFilled = true;
+        isCardNumberFilledCorrectly = true;
+    } else {
+        isCardNumberFilled = true;
+        isCardNumberFilledCorrectly = false;
+    }
+}
+
+let isMonthFilled = false;
+let isMonthFilledCorrectly = false;
+const monthRegex = /^(0[1-9]|1[0-2])$/;
+
+function isValidMonth(month){
+    return monthRegex.test(month);
+}
+
+function checkMonth(){
+    const cardMonth = document.getElementById('monthCard').value;
+    if(cardMonth===''){
+        isMonthFilled = false;
+        isMonthFilledCorrectly = false;
+    } else if(isValidMonth(cardMonth)){
+        isMonthFilled = true;
+        isMonthFilledCorrectly = true;
+    } else {
+        isMonthFilled = true;
+        isMonthFilledCorrectly = false;
+    }
+}
+
+
+let isYearFilled = false;
+let isYearFilledCorrectly = false;
+const yearRegex = /^(19\d{2}|20\d{2}|21\d{2})$/;
+
+function isValidYear(year){
+    return yearRegex.test(year);
+}
+
+function checkYear(){
+    const cardYear = document.getElementById('yearCard').value;
+    if(cardYear===''){
+        isYearFilled = false;
+        isYearFilledCorrectly = false;
+    } else if(isValidYear(cardYear)){
+        isYearFilled = true;
+        isYearFilledCorrectly = true;
+    } else {
+        isYearFilled = true;
+        isYearFilledCorrectly = false;
+    }
+}
+
+
+
+let isCvvFilled = false;
+let isCvvFilledCorrectly = false;
+const cvvRegex = /^\d{3,4}$/;
+
+function isValidCvv(cvv){
+    return cvvRegex.test(cvv);
+}
+
+function checkCvv(){
+    const cardCvv = document.getElementById('cvvCard').value;
+    if(cardCvv===''){
+        isCvvFilled = false;
+        isCvvFilledCorrectly = false;
+    } else if(isValidCvv(cardCvv)){
+        isCvvFilled = true;
+        isCvvFilledCorrectly = true;
+    } else {
+        isCvvFilled = true;
+        isCvvFilledCorrectly = false;
+    }
+}
+
+const finalCheckoutButton = document.getElementById('finalCheckout');
+const processedMessage = document.querySelector('.checkoutMessage');
+const alertMessage = document.querySelector('.alertMessage');
+
+finalCheckoutButton.addEventListener('click', ()=> {
+    checkName();
+    checkPhone();
+    checkAddress();
+    checkCardNumber();
+    checkMonth();
+    checkYear();
+    checkCvv();
+
+    if(!isNameFilled || !isPhoneFilled || !isAddressFilled || !isCardNumberFilled || !isMonthFilled || !isYearFilled || !isCvvFilled){
+        alertMessage.innerHTML = "PLEASE FILL ALL THE FIELDS IN ORDER TO CONTINUE.";
+        alertMessage.style.fontSize = "20px";
+        alertMessage.style.display = "block";
+        function closeAlertMessage(){
+            alertMessage.style.display = "none";
+        }
+        setTimeout(closeAlertMessage,2000);
+    } else if (isNameFilledCorrectly && isPhoneFilledCorrectly && isAddressFilled && isCardNumberFilledCorrectly && isMonthFilledCorrectly && isYearFilledCorrectly && isCvvFilledCorrectly){
+        payment.style.display = "none";
+        document.querySelector(".list").innerHTML = "";
+        document.querySelector(".totalAmount").innerHTML ="0$";
+        document.querySelector(".itemsNumber").innerHTML = "0";
+        processedMessage.style.display = "block";
+        function closeProcessedMessage(){
+            processedMessage.style.display ="none";
+        }
+        setTimeout(closeProcessedMessage,3000);
+    }
+        else{
+            document.querySelector(".alertMessage").innerHTML = "PLEASE CHECK AGAIN THE FOLLOWING FIELDS:  ";
+            if(!isNameFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("NAME AND SURNAME");
+                alertMessage.appendChild(newText);
+            };
+            if(!isPhoneFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("PHONE NUMBER");
+                alertMessage.appendChild(newText);
+            };
+            if(!isCardNumberFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("CARD NUMBER");
+                alertMessage.appendChild(newText);
+            };
+            if(!isMonthFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("MONTH");
+                alertMessage.appendChild(newText);
+            };
+            if(!isYearFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("YEAR");
+                alertMessage.appendChild(newText);
+            };
+            if(!isCvvFilledCorrectly){
+                let br = document.createElement("br");
+                alertMessage.appendChild(br);
+                let newText = document.createTextNode("CVV");
+                alertMessage.appendChild(newText);
+            };
+            alertMessage.style.fontSize = "16px";
+            alertMessage.style.display = "block";
+            function closeAlertMessage(){
+                alertMessage.style.display = "none";
+            }
+            setTimeout(closeAlertMessage,4000);
+        }
+    }
+)

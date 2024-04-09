@@ -33,6 +33,10 @@ nav {
     background-color: transparent;
 }
 
+.searchIcon{
+    cursor:pointer;
+}
+
 .searchInput::placeholder {
     color: lightgray;
 }
@@ -203,11 +207,14 @@ nav {
     left: 0;
     right: 0;
     margin:auto;
+    margin-top:5%;
     padding: 10px 50px;
+    /* display:flex; */
     display:none;
     flex-direction: column;
     -webkit-box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.87); 
     box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.87);
+    z-index:2;
 }
 
 .infos {
@@ -505,12 +512,15 @@ list-style: none;
 
 .fInput{
     padding:5px;
+    width: calc(100% - 65px); /**/
 }
 
 .fButton{
     padding:5px;
     background-color: black;
     color: white;
+    cursor: pointer;
+    width: 45px; /**/
 }
 
 .fIcons{
@@ -521,11 +531,289 @@ list-style: none;
     width: 20px;
     height: 20px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
-.copyright{
-    font-weight: 300;
+.emailMd{
+position:relative;
+display: none;
+width: 100%;
+height: 100%;
+}
+
+.emailMdContent{
+    margin-top:10px;
+    font-size: 16px;
+    display:inline-block;
+    border: 2px solid black;
+    background-color: rgb(92, 244, 153);
+    padding:4px;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    text-align: center;
+    display:flex;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+#followUs{
+transition: transform 0.5s ease;
+display:block;
+}
+
+.fIcons{
+    transition: transform 0.5s ease;
+}
+
+.transition-delay{
+    transform: translateY(40px);
+}
+
+#cartItem{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+}
+
+.cartImg{
+    width: 30px;
+    height: 30px;
+    /* padding-left:20px; */
+    /* cursor: pointer; */
+}
+
+.cart{
+    position: relative;
+}
+.cartButton{
+    background: none;
+    border: none;
+    padding-left:20px;
+    margin: 0;
+    width: 20px;
+    cursor: pointer;
+}
+.itemsNumber{
+    position: absolute;
+    font-weight: bold;
+    text-align: center;
+    top:-10%;
+    right: -130%;
+    background-color: red;
+    width: 16px;
+    height: 16px;
     font-size: 14px;
+    border-radius: 6px;
+    display:none;
+}
+
+.cartMenu{
+    position : absolute;
+    font-size: 20px;
+    right: 2%;
+    top:10%;
+    z-index:2;
+    background-color: gainsboro;
+    width: 40%;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-box-shadow: 0px 0px 67px 67px rgba(0,0,0,0.77);
+    -moz-box-shadow: 0px 0px 67px 67px rgba(0,0,0,0.77);
+    box-shadow: 0px 0px 67px 67px rgba(0,0,0,0.77);
+    display:none;
+}
+
+.itemsList{
+    color:black;
+}
+
+.list{
+    list-style-type: none;
+    padding:0;
+}
+
+.item{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.itemImg{
+    height: 80px;
+    width: 80px;
+    margin-left:6px;
+}
+
+.itemDesc{
+    width: 35%;
+    font-size: 16px;
+    padding:6px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border:2px solid black;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.qtyMenu{
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin-left:4px;
+}
+
+.currentQty{
+    padding:4px;
+}
+
+.plus, .minus{
+    cursor:pointer;
+    height: 30px;
+    width: 24px;
+    font-weight: bold;
+}
+
+.binButton{
+    cursor:pointer;
+    background: none;
+    border:none;
+    padding:0;
+    margin-right:6px;
+}
+.binIcon{
+    height: 30px;
+    width: 30px;
+    margin-right:6px;
+}
+
+.cartTitle{
+    font-size: 20px;
+    position:relative;
+    margin:0;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:4px;
+    color:black;
+    border-bottom: 2px solid;
+}
+
+.checkoutButton{
+    height: 40px;
+    width: 100%;
+    cursor:pointer;
+    background-color: gray;
+    font-weight: bold;
+}
+
+.closeCart{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    background-color: gray;
+    color:white;
+    top:6px;
+    right:6px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+    padding:2px;
+}
+
+.total {
+    display:flex;
+    justify-content: space-evenly;
+    color:black;
+    flex-direction: row;
+    padding:10px;
+    font-weight: bold;
+    font-size: 24px;
+    border-top:3px solid black;
+}
+
+.emptyMessage{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color:black;
+    padding:10px;
+    font-weight: bold;
+}
+
+.discountedAmount{
+    color:green;
+    display:none;
+    text-decoration: "none";
+}
+
+.offer {
+    position:absolute;
+    display:flex;
+    top:13%;
+    z-index:100;
+    background-color: gainsboro;
+    flex-direction: column;
+    width: 40%;
+    left:55%;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    height: auto;
+    color:black;
+    font-weight: bold;
+    padding:6px;
+    border-radius: 15%;
+    border:3px solid black; 
+    -webkit-box-shadow: 0px 0px 291px 135px rgba(0,0,0,0.99);
+-moz-box-shadow: 0px 0px 291px 135px rgba(0,0,0,0.99);
+box-shadow: 0px 0px 291px 135px rgba(0,0,0,0.99);
+display:none;
+}
+
+.offerTitle{
+    font-size: 24px;
+    border-bottom: 2px solid black;
+}
+
+.offerMessage{
+    color:rgb(59, 57, 57);
+}
+
+.checkoutMessage{
+    position:absolute;
+    font-size: 50px;
+    font-weight: bold;
+    width: auto;
+    left:20%;
+    right: 20%;
+    padding:20px;
+    border-radius: 20px;
+    text-align: center;
+    top:65%;
+    z-index:5;
+    background-color: black;
+    display:none;
+}
+
+.alertMessage{
+    position:absolute;
+    top:108%;
+    font-size: 20px;
+    z-index: 34;
+    width: 80%;
+    text-align: center;
+    color:red;
+    background-color:rgb(255, 255, 255);
+    padding:6px;
+    border:2px solid black;
+    display:none;
 }
 
 /* Media query pentru ecrane cu latime maxima de 768px */
@@ -652,7 +940,16 @@ list-style: none;
     }
 
     .payment{
+        margin-top:10%;
         width: 70%;
         padding:20px;
+    }
+
+    .cartMenu{
+        width: 70%;
+    }
+
+    .cart{
+        right:10%;
     }
 }

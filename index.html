@@ -13,15 +13,96 @@
                 <div class="navItem">
                     <img src="./Images/wildplay.png" width="150" height="30 "alt="sneakers">
                 </div>
+                <div class="offer">
+                    <div class="offerTitle">JOIN US AND SAVE</div>
+                    <div class="offerMessage">Exclusive Offer: Get a 10% discount on your next purchase if you subscribe to our newsletter!</div>
+                </div>
                 <div class="navItem">
                     <div class="search">
                         <input type='text' placeholder="Search..." class="searchInput">
                         <img src="./Images/search.png" width="20" height="20" alt="" class="searchIcon">
                     </div>
                 </div>
-                <div class="navItem">
+                <div class="navItem" id="cartItem">
                     <span class="limitedOffer">Limited Offer!</span>
+                    <div class="cart">
+                        <button class="cartButton">
+                            <img src="./Images/cart_icon.png" alt="cart_image" class="cartImg">
+                        </button>
+                        <span class="itemsNumber">0</span>
+                    </div>
                 </div>
+                <div class="cartMenu">
+                    <h2 class="cartTitle">SHOPPING CART</h2>
+                    <div class="emptyMessage">THE SHOPPING CART IS EMPTY</div>
+                    <div class="itemsList">
+                        <ul class="list">
+                            <!-- <li class="item">
+                                <div itemImage>
+                                    <img src="./Images/chair_green.png" alt="" class="itemImg">
+                                </div>
+                                <div class="itemDesc" style="background-color:green">
+                                    <div class="itemName" data-name="ELEMENTAL THRONE">ELEMENTAL THRONE</div>
+                                    <div class="itemColor" data-name="FOREST EMERALD">FOREST EMERALD</div>
+                                </div>
+                                <div class="qtyMenu">
+                                    <button class="minus">-</button>
+                                    <div class="currentQty">1</div>
+                                    <button class="plus">+</button>
+                                </div>
+                                <div class="amount">399$</div>
+                                <div class="bin">
+                                    <button class="binButton">
+                                        <img src="./Images/bin_icon.png" alt="" class="binIcon">
+                                    </button>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="total">
+                        <div class="totalWord">TOTAL</div>
+                        <div class="totalAmount">0$</div>
+                        <div class="discountedAmount">30$</div>
+                    </div>
+                    <div class="checkout">
+                        <button class="checkoutButton">CHECKOUT!</button>
+                    </div>
+                    <span class="closeCart">X</span>
+                </div>
+                <div class="payment">
+                    <!-- Titlul sectiunii pentru informatii personale -->
+                    <h1 class="payTitle">Personal Information</h1>
+                    <!-- Eticheta și câmpul de introducere pentru nume și prenume -->
+                    <label>Name and Surname</label>
+                    <input type="text" placeholder="John Doe" class="payInput" id="personName">
+                    <!-- Eticheta și câmpul de introducere pentru numărul de telefon -->
+                    <label>Phone Number</label>
+                    <input type="text" placeholder="+40700000000" class="payInput" id="personPhone">
+                    <!-- Eticheta și câmpul de introducere pentru adresa de livrare -->
+                    <label>Address</label>
+                    <input type="text" placeholder="Elton St 21 22-145" class="payInput" id="personAddress">
+                    <!-- Titlul secțiunii de informații despre card -->
+                    <h1 class="payTitle">Card Information</h1>
+                    <!-- Iconițele pentru cardurile de plată acceptate -->
+                    <div class="cardIcons">
+                        <img src="./Images/visa.png" width="60" height="60" alt="visa_icon" class="cardIcon">
+                        <img src="./Images/mastercard.png" width="60" height="60" alt="mastercard_icon" class="cardIcon">
+                    </div>
+                    <!-- Câmpul de introducere pentru numărul cardului -->
+                    <input type="text" placeholder="Card Number 1234123412341234" class="payInput" id="cardNumber">
+                    <!-- Câmpurile de introducere pentru data expirării și codul CVV al cardului -->
+                    <div class="cardInfo">
+                        <input type="text" placeholder="mm" class="payInput sm" id = "monthCard" >
+                        <input type="text" placeholder="yyyy" class="payInput sm" id = "yearCard">
+                        <input type="text" placeholder="cvv" class="payInput sm" id="cvvCard" >
+                    </div>
+                    <!-- Butonul pentru finalizarea plății -->
+                    <button class="payButton" id="finalCheckout">Checkout!</button>
+                    <!-- Butonul de închidere a ferestrei modale de plată -->
+                    <span class="close">X</span>
+                    <div class="alertMessage"></div>
+                </div>
+                <div class="checkoutMessage">YOUR GEAR IS ON IT'S WAY!</div>
             </div>
             <div class="navBottom">
                 <h3 class="menuItem">ELEMENTAL THRONE</h3>
@@ -126,7 +207,7 @@
                     <div class="color"></div>
                 </div>
                 <div class="colorName">FOREST EMERALD</div>
-                <button class="productButton">BUY NOW!</button>
+                <button class="productButton">ADD TO CART</button>
             </div>
             <div class="infos">
                 <div class="infoLeft">
@@ -140,38 +221,6 @@
                     <h1 class="infoTitle" id="infoTitle2">ADJUSTABLE FEATURES</h1>
                 </div>            
                 <span class="closeInfo">X</span>
-            </div>
-            <div class="payment">
-                <!-- Titlul sectiunii pentru informatii personale -->
-                <h1 class="payTitle">Personal Information</h1>
-                <!-- Eticheta și câmpul de introducere pentru nume și prenume -->
-                <label>Name and Surname</label>
-                <input type="text" placeholder="John Doe" class="payInput">
-                <!-- Eticheta și câmpul de introducere pentru numărul de telefon -->
-                <label>Phone Number</label>
-                <input type="text" placeholder="+1 234 5678" class="payInput">
-                <!-- Eticheta și câmpul de introducere pentru adresa de livrare -->
-                <label>Address</label>
-                <input type="text" placeholder="Elton St 21 22-145" class="payInput">
-                <!-- Titlul secțiunii de informații despre card -->
-                <h1 class="payTitle">Card Information</h1>
-                <!-- Iconițele pentru cardurile de plată acceptate -->
-                <div class="cardIcons">
-                    <img src="./Images/visa.png" width="60" height="60" alt="visa_icon" class="cardIcon">
-                    <img src="./Images/mastercard.png" width="60" height="60" alt="mastercard_icon" class="cardIcon">
-                </div>
-                <!-- Câmpul de introducere pentru numărul cardului -->
-                <input type="text" placeholder="Card Number" class="payInput" >
-                <!-- Câmpurile de introducere pentru data expirării și codul CVV al cardului -->
-                <div class="cardInfo">
-                    <input type="text" placeholder="mm" class="payInput sm"  >
-                    <input type="text" placeholder="yyyy" class="payInput sm"  >
-                    <input type="text" placeholder="cvv" class="payInput sm"  >
-                </div>
-                <!-- Butonul pentru finalizarea plății -->
-                <button class="payButton">Checkout!</button>
-                <!-- Butonul de închidere a ferestrei modale de plată -->
-                <span class="close">X</span>
             </div>
         </div>
         <div class="gallery">
@@ -238,18 +287,21 @@
             </div>
             <div class="footerRight">
                 <div class="footerRightMenu">
-                    <h1 class="fMenuTitle">Subscrie to our newsletter</h1>
-                    <div class="fMail">
-                        <input type="text" placeholder="your@email.com" class="fInput">
-                        <button class="fButton">Join!</button>
+                    <h1 class="fMenuTitle">Subscribe to our newsletter</h1>
+                    <form id="emailForm" class="fMail">
+                        <input type="email" id="email" name="email" class="fInput" placeholder="your@email.com">
+                        <button type="submit" class="fButton">Join!</button>
+                    </form>
+                    <div class="emailMd">
+                        <div class="emailMdContent"></div>
                     </div>
                 </div>
                 <div class="footerRightMenu">
-                    <h1 class="fMenuTitle">Follow us!</h1>
+                    <h1 class="fMenuTitle" id="followUs">Follow us!</h1>
                     <div class="fIcons">
                         <img src="./Images/twitter.png" alt="twitter_icon" class="fIcon">
                         <img src="./Images/facebook.png" alt="facebook_icon" class="fIcon">
-                        <img src="./Images/insta.png" alt="instagram_icon" class="fIcon">
+                        <img src="./Images/instagram.png" alt="instagram_icon" class="fIcon">
                         <img src="./Images/whatsapp.png" alt="whatsapp_icon" class="fIcon">
                     </div>
                 </div>
