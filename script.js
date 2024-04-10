@@ -160,6 +160,7 @@ const currentProductInfoImg1 = document.querySelector("#infoImg1");
 const currentProductInfoImg2 = document.querySelector("#infoImg2");
 const currentProductInfoText1 = document.querySelector("#infoText1");
 const currentProductInfoText2 = document.querySelector("#infoText2");
+const infoButton = document.querySelector(".productInfoBox");
 
 menuItems.forEach((item,index) => {
 item.addEventListener("click",()=>{
@@ -200,10 +201,12 @@ currentProductColors.forEach((color,index)=>{
         currentProductImg.src = chosenProduct.colors[index].img;
         // Actualizarea numelui culorii produsului curent cu numele culorii selectate
         currentProductColorName.textContent = chosenProduct.colors[index].name;
+        infoButton.style.color = chosenProduct.colors[index].code;
+        infoButton.style.borderColor = chosenProduct.colors[index].code;
 });
 });
 
-const infoButton = document.querySelector(".productInfoBox");
+// const infoButton = document.querySelector(".productInfoBox");
 const infos = document.querySelector(".infos");
 const closeInfo = document.querySelector(".closeInfo");
 
@@ -678,44 +681,73 @@ finalCheckoutButton.addEventListener('click', ()=> {
         setTimeout(closeProcessedMessage,3000);
     }
         else{
-            document.querySelector(".alertMessage").innerHTML = "PLEASE CHECK AGAIN THE FOLLOWING FIELDS:  ";
+            document.querySelector(".alertMessage").innerHTML = "PLEASE CHECK AGAIN THE FIELDS MARKED WITH RED";
+            const nameField = document.getElementById('personName');
             if(!isNameFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("NAME AND SURNAME");
-                alertMessage.appendChild(newText);
-            };
+                nameField.classList.add("redBorder");
+                function resetNameField(){
+                    nameField.value = "";
+                }
+                setTimeout(resetNameField,2000);
+            } else{
+                nameField.classList.remove("redBorder");
+            }
+
+            const phoneField = document.getElementById('personPhone');
             if(!isPhoneFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("PHONE NUMBER");
-                alertMessage.appendChild(newText);
-            };
+                phoneField.classList.add("redBorder");
+                function resetPhoneField(){
+                    phoneField.value = "";
+                }
+                setTimeout(resetPhoneField,2000);
+            } else{
+                phoneField.classList.remove("redBorder");
+            }
+            
+            const cardNumberField = document.getElementById('cardNumber');
             if(!isCardNumberFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("CARD NUMBER");
-                alertMessage.appendChild(newText);
-            };
+                cardNumberField.classList.add("redBorder");
+                function resetCardNumberField(){
+                    cardNumberField.value = "";
+                }
+                setTimeout(resetCardNumberField,2000);
+            } else{
+                cardNumberField.classList.remove("redBorder");
+            }
+
+            const monthField = document.getElementById('monthCard');
             if(!isMonthFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("MONTH");
-                alertMessage.appendChild(newText);
-            };
+                monthField.classList.add("redBorder");
+                function resetMonthField(){
+                    monthField.value = "";
+                }
+                setTimeout(resetMonthField,2000);
+            } else{
+                monthField.classList.remove("redBorder");
+            }
+
+            const yearField = document.getElementById('yearCard');
             if(!isYearFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("YEAR");
-                alertMessage.appendChild(newText);
-            };
+                yearField.classList.add("redBorder");
+                function resetYearField(){
+                    yearField.value = "";
+                }
+                setTimeout(resetYearField,2000);
+            } else{
+                yearField.classList.remove("redBorder");
+            }
+
+            const cvvField = document.getElementById('cvvCard');
             if(!isCvvFilledCorrectly){
-                let br = document.createElement("br");
-                alertMessage.appendChild(br);
-                let newText = document.createTextNode("CVV");
-                alertMessage.appendChild(newText);
-            };
-            alertMessage.style.fontSize = "16px";
+                cvvField.classList.add("redBorder");
+                function resetCvvField(){
+                    cvvField.value = "";
+                }
+                setTimeout(resetCvvField,2000);
+            } else{
+                cvvField.classList.remove("redBorder");
+            }
+
             alertMessage.style.display = "block";
             function closeAlertMessage(){
                 alertMessage.style.display = "none";
