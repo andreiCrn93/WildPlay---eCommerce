@@ -863,10 +863,10 @@ display:none;
 
     .sliderTitle{
     position:absolute;
-    top:65%;
+    top:75%;
     right: 3%;
     color: white;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
     z-index: 1;
