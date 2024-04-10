@@ -317,6 +317,7 @@ const emptyMessage = document.querySelector(".emptyMessage");
     const productImage = chosenProduct.colors[productColorIndex].img;
     const productColorName = chosenProduct.colors[productColorIndex].name;
     const productImageColor = chosenProduct.colors[productColorIndex].code;
+
     const existingCartItem = document.querySelector(`.itemDesc .itemName[data-name="${productName}${productColorName}"]`);
 
     if(existingCartItem){
@@ -331,17 +332,24 @@ const emptyMessage = document.querySelector(".emptyMessage");
         amountElement.innerHTML = "$" + newAmountElement;
         const numberOfElements = document.querySelector('.itemsNumber');
         numberOfElements.innerHTML = parseInt(numberOfElements.textContent)+1;
-
     } else{
             const newItem = document.createElement("li");
             newItem.classList.add("item");
             newItem.setAttribute("data-name", productName);
             newItem.setAttribute("data-color", productColorName);
+            let productImageBackground = '';
+            if(productImageColor==="green"){
+                productImageBackground = "rgba(0, 255, 0, 0.1)";
+            } else if(productImageColor==="blue"){
+                productImageBackground = "rgba(0, 0, 255, 0.1)";
+            } else if(productImageColor==="red"){
+                productImageBackground = "rgba(255, 0, 0, 0.1)";
+            };
             newItem.innerHTML = `
                 <div class="itemImage">
                     <img src="${productImage}" alt="" class="itemImg">
                 </div>
-                <div class="itemDesc" style="background-color:${productImageColor}">
+                <div class="itemDesc" style="background-color:${productImageBackground}">
                     <div class="itemName" data-name="${productName}${productColorName}">${productName}</div>
                     <div class="itemColor" data-name="${productColorName}">${productColorName}</div>
                 </div>
@@ -357,6 +365,8 @@ const emptyMessage = document.querySelector(".emptyMessage");
                     </button>
                 </div>
             `;
+            console.log(productImageColor);
+            console.log(productImageBackground);
             document.querySelector(".list").appendChild(newItem);
                 newItem.querySelector(".minus").addEventListener("click", decreaseQuantity);
                 newItem.querySelector(".plus").addEventListener("click", increaseQuantity);
@@ -371,11 +381,10 @@ function increaseQuantity(event) {
     const quantityElement = event.target.parentElement.querySelector(".currentQty");
     const quantity = parseInt(quantityElement.textContent);
     quantityElement.textContent = quantity + 1;
-    const productPrice = currentProductPrice.textContent;
     const amountElement = event.target.parentElement.nextElementSibling;
     const amountElementInt = parseInt(amountElement.textContent.substring(1,amountElement.textContent.length));
-    const amountElement3 = productPrice.substring(1,productPrice.length);
-    const newAmountElement = parseInt(amountElementInt) + parseInt(amountElement3);
+    const productPrice = amountElementInt/quantity;
+    const newAmountElement = parseInt(amountElementInt) + productPrice;
     amountElement.innerHTML = "$" + newAmountElement;
     const numberOfElements = document.querySelector('.itemsNumber');
     numberOfElements.innerHTML = parseInt(numberOfElements.textContent)+1;
@@ -390,11 +399,11 @@ function decreaseQuantity(event) {
     } else {
         event.target.closest(".item").remove();
     }
-    const productPrice = currentProductPrice.textContent;
+
     const amountElement = event.target.parentElement.nextElementSibling;
     const amountElementInt = parseInt(amountElement.textContent.substring(1,amountElement.textContent.length));
-    const amountElement3 = productPrice.substring(1,productPrice.length);
-    const newAmountElement = parseInt(amountElementInt) - parseInt(amountElement3);
+    const productPrice = amountElementInt/quantity;
+    const newAmountElement = parseInt(amountElementInt) - productPrice;
     amountElement.innerHTML = "$" + newAmountElement;
     const numberOfElements = document.querySelector('.itemsNumber');
     numberOfElements.innerHTML = parseInt(numberOfElements.textContent)-1;
